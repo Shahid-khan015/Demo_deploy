@@ -1,24 +1,32 @@
 from flask import Flask
-from website import create_app
+import sys
+import os
 
-# Create the Flask app
-app = create_app()
-app.secret_key = '12@#!_#SD'
+# Create basic Flask app first
+app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY', 'dev_key_123')
 
-# Add a base route handler
+# Basic error handling
+@app.errorhandler(500)
+def server_error(e):
+    return {"error": "Internal Server Error", "message": str(e)}, 500
+
+@app.errorhandler(404)
+def not_found(e):
+    return {"error": "Not Found", "message": str(e)}, 404
+
+# Test routes
 @app.route('/')
 def home():
-    return {"message": "Flask API is running"}
+    return {"message": "Hello from Flask!"}
 
-# Add your test route
 @app.route('/test')
 def test():
     return {"status": "working"}
 
-# This is required for Vercel
-app.debug = False
+# For Vercel
+application = app
 
-# Handle all routes
-@app.route('/<path:path>')
-def catch_all(path):
-    return {"message": f"Route '{path}' not found"}, 404
+# For local testing
+if __name__ == '__main__':
+    app.run(debug=True)
