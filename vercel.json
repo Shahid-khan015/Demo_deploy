@@ -12,8 +12,10 @@
           "dest": "/api/index.py"
       }
   ],
-  "env": {
+  
+    "env": {
       "FLASK_APP": "api/index.py",
-      "FLASK_ENV": "production"
+      "FLASK_ENV": "production",
+      "PYTHON_VERSION": "3.10.6 "
   }
 }
