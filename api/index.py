@@ -2,7 +2,7 @@ from flask import Flask
 from website import create_app
 
 app = create_app()
-app.secret_key = '12@#!_#SD'
+#app.secret_key = '12@#!_#SD'
 
 # Add error handlers
 @app.errorhandler(404)
